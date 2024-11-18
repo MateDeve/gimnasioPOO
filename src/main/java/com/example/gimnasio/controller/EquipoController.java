@@ -39,7 +39,7 @@ public class EquipoController {
     }
 
     // Endpoint para obtener un equipo por su nombrregistrar-mantenimiento
-    @GetMapping("/{nombre}")
+    @GetMapping("/buscar/{nombre}")
     public Equipo obtenerEquipoPorNombre(@PathVariable String nombre) {
         return equipoService.obtenerEquipoPorNombre(nombre);
     }

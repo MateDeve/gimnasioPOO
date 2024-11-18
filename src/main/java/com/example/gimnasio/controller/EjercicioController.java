@@ -35,7 +35,7 @@ public class EjercicioController {
     }
 
     // Endpoint para buscar un ejercicio por nombre
-    @GetMapping("/{nombre}")
+    @GetMapping("/buscar/{nombre}")
     public Ejercicio buscarEjercicioPorNombre(@PathVariable String nombre) {
         return ejercicioService.buscarEjercicioPorNombre(nombre);
     }

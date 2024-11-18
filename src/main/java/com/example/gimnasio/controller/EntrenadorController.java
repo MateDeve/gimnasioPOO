@@ -50,7 +50,28 @@ public class EntrenadorController {
         return "Entrenamiento planificado para " + nombreCliente + " exitosamente";
     }
 
-    @GetMapping("/{nombre}")
+    @GetMapping("/{nombreEntrenador}/mostrar-detalles")
+    public String mostrarDetalles(@PathVariable String nombreEntrenador) {
+        Entrenador entrenador = entrenadorService.buscarEntrenadorPorNombre(nombreEntrenador);
+        if (entrenador != null) {
+            entrenador.mostrarDetalles();
+            return "Detalles del entrenador " + nombreEntrenador + " mostrados en la consola.";
+        }
+        return "Entrenador no encontrado.";
+    }
+
+    @PostMapping("/{nombreEntrenador}/asignar-tarea")
+    public String asignarTarea(@PathVariable String nombreEntrenador, @RequestBody String tarea) {
+        Entrenador entrenador = entrenadorService.buscarEntrenadorPorNombre(nombreEntrenador);
+        if (entrenador != null) {
+            // Asignar tarea usando el método de la interfaz
+            entrenador.asignarTarea(tarea);
+            return "Tarea asignada al entrenador " + nombreEntrenador;
+        }
+        return "Entrenador no encontrado.";
+    }
+
+    @GetMapping("/buscar/{nombre}")
     public Entrenador buscarEntrenadorPorNombre(@PathVariable String nombre) {
         return entrenadorService.buscarEntrenadorPorNombre(nombre);
     }

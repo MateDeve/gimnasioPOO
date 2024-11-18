@@ -4,6 +4,8 @@ import com.example.gimnasio.model.Administrador;
 import com.example.gimnasio.model.Cliente;
 import com.example.gimnasio.model.Equipo;
 import com.example.gimnasio.model.Membresia;
+import com.example.gimnasio.exception.AdministradorNoEncontrado;
+import com.example.gimnasio.exception.ClienteNoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +39,7 @@ public class AdministradorService {
         return administradores.stream()
                 .filter(admin -> admin.getNombre().equals(nombre))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new AdministradorNoEncontrado(nombre));
     }
 
     public boolean eliminarAdministrador(String nombre) {
@@ -48,7 +50,9 @@ public class AdministradorService {
     public void asignarMembresia(String nombreAdministrador, String nombreCliente, Membresia membresia) {
         Administrador administrador = obtenerAdministradorPorNombre(nombreAdministrador);
         Cliente cliente = clienteService.buscarPorNombre(nombreCliente);
+        if (cliente == null) {
+            throw new ClienteNoEncontrado("Cliente con nombre " + nombreCliente + "no encontrado");
+        }
         administrador.asignarMembresia(cliente, membresia);
     }
-
 }

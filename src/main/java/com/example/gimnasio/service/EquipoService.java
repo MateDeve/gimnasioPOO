@@ -1,5 +1,6 @@
 package com.example.gimnasio.service;
 
+import com.example.gimnasio.exception.EquipoNoEncontrado;
 import com.example.gimnasio.model.Equipo;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -33,20 +34,18 @@ public class EquipoService {
 
     // Metodo para obtener el estado de un equipo por su nombre
     public Equipo obtenerEquipoPorNombre(String nombre) {
-        for (Equipo equipo : equipos) {
-            if (equipo.getNombre().equalsIgnoreCase(nombre)) {
-                return equipo;
-            }
-        }
-        return null; // Retorna null si no se encuentra el equipo
+        return equipos.stream()
+                .filter(equipo -> equipo.getNombre().equalsIgnoreCase(nombre))
+                .findFirst()
+                .orElseThrow(() -> new EquipoNoEncontrado(nombre));
     }
 
     public boolean eliminarEquipo(String nombre) {
-        Equipo equipo = obtenerEquipoPorNombre(nombre);
-        if (equipo != null) {
-            equipos.remove(equipo);
-            return true; // Equipo eliminado exitosamente
-        }
-        return false; // Equipo no encontrado
+        Equipo equipo = equipos.stream()
+                .filter(e -> e.getNombre().equalsIgnoreCase(nombre))
+                .findFirst()
+                .orElseThrow(() -> new EquipoNoEncontrado(nombre));
+        equipos.remove(equipo);
+        return true;
     }
 }

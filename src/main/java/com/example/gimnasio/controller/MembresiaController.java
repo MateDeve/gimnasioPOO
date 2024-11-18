@@ -28,7 +28,7 @@ public class MembresiaController {
     }
 
     // Endpoint para obtener una membresía por tipo
-    @GetMapping("/{tipo}")
+    @GetMapping("buscar/{tipo}")
     public Membresia obtenerMembresia(@PathVariable String tipo) {
         return membresiaService.obtenerMembresiaPorTipo(tipo);
     }

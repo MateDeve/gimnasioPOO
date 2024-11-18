@@ -23,7 +23,7 @@ public class ClaseGrupalController {
     }
 
     // Endpoint para inscribir un cliente en una clase grupal
-    @PostMapping("/{nombreClase}/inscribir")
+    @PutMapping("/{nombreClase}/inscribir")
     public String inscribirCliente(@PathVariable String nombreClase, @RequestBody Cliente cliente) {
         claseGrupalService.inscribirCliente(nombreClase, cliente);
         return "Cliente inscrito en la clase " + nombreClase;

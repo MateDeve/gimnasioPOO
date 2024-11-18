@@ -22,7 +22,7 @@ public class RutinaController {
     }
 
     // Eliminar una rutina
-    @DeleteMapping("/{nombre}")
+    @DeleteMapping("/eliminar/{nombre}")
     public String eliminarRutina(@PathVariable String nombre) {
         Rutina rutina = rutinaService.obtenerRutinaPorNombre(nombre);
         if (rutina != null) {
@@ -40,7 +40,7 @@ public class RutinaController {
     }
 
     // Obtener rutina por nombre
-    @GetMapping("/{nombre}")
+    @GetMapping("/buscar/{nombre}")
     public Rutina obtenerRutinaPorNombre(@PathVariable String nombre) {
         Rutina rutina = rutinaService.obtenerRutinaPorNombre(nombre);
         if (rutina != null) {

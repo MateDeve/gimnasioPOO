@@ -31,6 +31,7 @@ public class ClaseGrupal {
     public String getHorario() {
         return horario;
     }
+
     public Entrenador getEntrenador() {
         return entrenador;
     }
@@ -45,7 +46,6 @@ public class ClaseGrupal {
     }
 
     public List<Cliente> mostrarParticipantes() {
-
         return clientesInscritos;
     }
 

@@ -36,15 +36,36 @@ public class AdministradorController {
             return "Administrador no encontrado.";
         }
     }
-    @GetMapping("/{nombre}")
+    @GetMapping("/buscar/{nombre}")
     public Administrador obtenerAdministradorPorNombre(@PathVariable String nombre) {
         return administradorService.obtenerAdministradorPorNombre(nombre);
     }
 
 
-    @PostMapping("/{nombreAdministrador}/asignar-membresia/{nombreCliente}")
-    public void asignarMembresia(@PathVariable String nombreAdministrador, @PathVariable String nombreCliente, @RequestBody Membresia membresia) {
+    @PutMapping("/{nombreAdministrador}/asignar-membresia/{nombreCliente}")
+    public String asignarMembresia(@PathVariable String nombreAdministrador, @PathVariable String nombreCliente, @RequestBody Membresia membresia) {
         administradorService.asignarMembresia(nombreAdministrador, nombreCliente, membresia);
+        return "Membresía asignada correctamente";
+    }
+
+    @PostMapping("/{nombreAdministrador}/asignar-tarea")
+    public String asignarTarea(@PathVariable String nombreAdministrador, @RequestBody String tarea) {
+        Administrador administrador = administradorService.obtenerAdministradorPorNombre(nombreAdministrador);
+        if (administrador != null) {
+            administrador.asignarTarea(tarea);
+            return "Tarea asignada: " + tarea;
+        }
+        return "Administrador no encontrado.";
+    }
+
+    @GetMapping("/{nombreAdministrador}/mostrar-detalles")
+    public String mostrarDetalles(@PathVariable String nombreAdministrador) {
+        Administrador administrador = administradorService.obtenerAdministradorPorNombre(nombreAdministrador);
+        if (administrador != null) {
+            administrador.mostrarDetalles();
+            return "Detalles mostrados en consola.";
+        }
+        return "Administrador no encontrado.";
     }
 
 }

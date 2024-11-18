@@ -2,6 +2,7 @@ package com.example.gimnasio.service;
 
 import com.example.gimnasio.model.Cliente;
 import com.example.gimnasio.model.Rutina;
+import com.example.gimnasio.exception.ClienteNoEncontrado;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class ClienteService {
         return clientes.stream()
                 .filter(c -> c.getNombre().equalsIgnoreCase(nombre))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new ClienteNoEncontrado(nombre));
     }
 
     public List<Rutina> consultarRutinas(String nombre) {

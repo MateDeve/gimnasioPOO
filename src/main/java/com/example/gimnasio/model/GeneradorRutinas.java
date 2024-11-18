@@ -12,7 +12,6 @@ public class GeneradorRutinas {
 
         List<Ejercicio> ejercicios = new ArrayList<>();
 
-        // Ejemplo básico de lógica: agregar ejercicios según nivel y objetivo
         if (objetivo.equalsIgnoreCase("Perder peso")) {
             ejercicios.add(new Ejercicio("Correr", "Cardio", "Piernas", "", 30, 1, 60));
             ejercicios.add(new Ejercicio("Sentadillas", "Fuerza", "Piernas", "Glúteos", 15, 3, 60));

@@ -30,7 +30,7 @@ public class ClienteController {
     }
 
     // Consultar un cliente por su nombre
-    @GetMapping("/{nombre}")
+    @GetMapping("/buscar/{nombre}")
     public Cliente getCliente(@PathVariable String nombre) {
 
         return clienteService.buscarPorNombre(nombre);
@@ -40,4 +40,25 @@ public class ClienteController {
     public List<Rutina> getRutinaHistorial(@PathVariable String nombre) {
         return clienteService.consultarRutinas(nombre);
     }
+
+    @PostMapping("/{nombre}/asignar-tarea")
+    public String asignarTarea(@PathVariable String nombre, @RequestBody String tarea) {
+        Cliente cliente = clienteService.buscarPorNombre(nombre); // Buscar el cliente
+        if (cliente != null) {
+            cliente.asignarTarea(tarea);
+            return "Tarea asignada al cliente " + nombre;
+        }
+        return "Cliente no encontrado.";
+    }
+
+    @GetMapping("/{nombre}/mostrar-detalles")
+    public String mostrarDetalles(@PathVariable String nombre) {
+        Cliente cliente = clienteService.buscarPorNombre(nombre); // Buscar el cliente
+        if (cliente != null) {
+            cliente.mostrarDetalles();
+            return "Detalles del cliente " + nombre + " mostrados en la consola.";
+        }
+        return "Cliente no encontrado.";
+    }
+
 }

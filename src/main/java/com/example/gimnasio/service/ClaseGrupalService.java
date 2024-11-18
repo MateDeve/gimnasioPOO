@@ -3,6 +3,7 @@ package com.example.gimnasio.service;
 import com.example.gimnasio.model.ClaseGrupal;
 import com.example.gimnasio.model.Cliente;
 import org.springframework.stereotype.Service;
+import com.example.gimnasio.exception.ClaseGrupalNoEncontrada;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class ClaseGrupalService {
         return clasesGrupales.stream()
                 .filter(c -> c.getNombre().equalsIgnoreCase(nombreClase))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new ClaseGrupalNoEncontrada(nombreClase));
     }
 
     // Consultar disponibilidad de una clase grupal

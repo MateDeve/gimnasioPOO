@@ -3,6 +3,8 @@ package com.example.gimnasio.service;
 import com.example.gimnasio.model.Entrenador;
 import com.example.gimnasio.model.Cliente;
 import com.example.gimnasio.model.Rutina;
+import com.example.gimnasio.exception.ClienteNoEncontrado;
+import com.example.gimnasio.exception.EntrenadorNoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +40,7 @@ public class EntrenadorService {
         if (entrenador != null) {
             entrenador.asignarCliente(cliente);
         } else {
-            throw new RuntimeException("Entrenador no encontrado");
+            throw new EntrenadorNoEncontrado(nombreEntrenador);
         }
     }
 
@@ -47,21 +49,10 @@ public class EntrenadorService {
         if (entrenador != null) {
             return entrenador.getClientesAsignados();
         } else {
-            throw new RuntimeException("Entrenador no encontrado");
+            throw new EntrenadorNoEncontrado(nombreEntrenador);
         }
     }
 
-    public static class ClienteNoEncontradoException extends RuntimeException {
-        public ClienteNoEncontradoException(String mensaje) {
-            super(mensaje);
-        }
-    }
-
-    public static class EntrenadorNoEncontradoException extends RuntimeException {
-        public EntrenadorNoEncontradoException(String mensaje) {
-            super(mensaje);
-        }
-    }
     // Planificar rutina para un cliente
     public void planificarEntrenamiento(String nombreEntrenador, String nombreCliente, Rutina rutina) {
         Cliente cliente = clienteService.buscarPorNombre(nombreCliente);
@@ -71,10 +62,10 @@ public class EntrenadorService {
             if (cliente != null) {
                 entrenador.planificarEntrenamiento(cliente, rutina);
             } else {
-                throw new ClienteNoEncontradoException("Cliente no encontrado: " + nombreCliente);
+                throw new ClienteNoEncontrado("Cliente no encontrado: " + nombreCliente);
             }
         } else {
-            throw new EntrenadorNoEncontradoException("Entrenador no encontrado: " + nombreEntrenador);
+            throw new EntrenadorNoEncontrado("Entrenador no encontrado: " + nombreEntrenador);
         }
     }
 
@@ -84,6 +75,6 @@ public class EntrenadorService {
         return entrenadores.stream()
                 .filter(entrenador -> entrenador.getNombre().equalsIgnoreCase(nombreEntrenador))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new EntrenadorNoEncontrado(nombreEntrenador));
     }
 }

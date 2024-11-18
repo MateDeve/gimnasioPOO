@@ -2,6 +2,7 @@ package com.example.gimnasio.service;
 
 import com.example.gimnasio.model.Ejercicio;
 import org.springframework.stereotype.Service;
+import com.example.gimnasio.exception.EjercicioNoEncontrado;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,6 @@ public class EjercicioService {
         return ejercicios.stream()
                 .filter(e -> e.getNombre().equalsIgnoreCase(nombre))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new EjercicioNoEncontrado(nombre));
     }
 }

@@ -1,5 +1,6 @@
 package com.example.gimnasio.service;
 
+import com.example.gimnasio.exception.MembresiaNoEncontrada;
 import com.example.gimnasio.model.Membresia;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class MembresiaService {
         return membresias.stream()
                 .filter(m -> m.getTipo().equalsIgnoreCase(tipo))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new MembresiaNoEncontrada(tipo));
     }
 
     // Eliminar una membresía

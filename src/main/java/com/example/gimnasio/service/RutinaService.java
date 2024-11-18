@@ -1,5 +1,6 @@
 package com.example.gimnasio.service;
 
+import com.example.gimnasio.exception.RutinaNoEncontrada;
 import com.example.gimnasio.model.Rutina;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -26,6 +27,6 @@ public class RutinaService {
         return rutinas.stream()
                 .filter(rutina -> rutina.getNombre().equalsIgnoreCase(nombre))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new RutinaNoEncontrada(nombre));
     }
 }

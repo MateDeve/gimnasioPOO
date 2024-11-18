@@ -1,9 +1,12 @@
 package com.example.gimnasio.model;
 
+import com.example.gimnasio.interfaces.Gestionable;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cliente extends Persona {
+public class Cliente extends Persona implements Gestionable {
     private Membresia membresia;
     private List<Rutina> historialRutinas = new ArrayList<>();
     private String objetivo;
@@ -15,6 +18,16 @@ public class Cliente extends Persona {
         this.membresia = membresia;
         this.objetivo = objetivo;
         this.nivelExperiencia = nivelExperiencia;
+    }
+
+    @Override
+    public void asignarTarea(String tarea) {
+        System.out.println("Cliente " + getNombre() + " recibió la tarea: " + tarea);
+    }
+
+    @Override
+    public void mostrarDetalles() {
+        System.out.println("Cliente: " + getNombre() + ", Nivel de experiencia: " + nivelExperiencia + ", Objetivo: " + objetivo);
     }
 
 
